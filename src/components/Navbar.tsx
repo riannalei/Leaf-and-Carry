@@ -11,13 +11,14 @@ const Navbar = async () => {
   const isAdmin = user?.email === process.env.ADMIN_EMAIL
 
   return (
-    <nav className='sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all'>
+    <nav className='sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-[#A3C7AC] bg-[#D5E8DC]/75 backdrop-blur-lg transition-all'>
       <MaxWidthWrapper>
-        <div className='flex h-14 items-center justify-between border-b border-zinc-200'>
-          <Link href='/' className='flex z-40 font-semibold'>
-            case<span className='text-green-600'>cobra</span>
+        <div className='flex h-14 items-center justify-between border-b border-[#A3C7AC]'>
+          <Link href='/' className='flex z-40 font-semibold items-center'>
+            <span>Leaf</span> 
+            <span className='text-[#D6AFA5] mx-1'> & </span> 
+            <span>Carry</span>
           </Link>
-
           <div className='h-full flex items-center space-x-4'>
             {user ? (
               <>
@@ -45,7 +46,7 @@ const Navbar = async () => {
                     size: 'sm',
                     className: 'hidden sm:flex items-center gap-1',
                   })}>
-                  Create case
+                  Create tote
                   <ArrowRight className='ml-1.5 h-5 w-5' />
                 </Link>
               </>
@@ -69,7 +70,7 @@ const Navbar = async () => {
                   Login
                 </Link>
 
-                <div className='h-8 w-px bg-zinc-200 hidden sm:block' />
+                <div className='h-8 w-px bg-[#A3C7AC] hidden sm:block' />
 
                 <Link
                   href='/configure/upload'
@@ -77,7 +78,7 @@ const Navbar = async () => {
                     size: 'sm',
                     className: 'hidden sm:flex items-center gap-1',
                   })}>
-                  Create case
+                  Create tote
                   <ArrowRight className='ml-1.5 h-5 w-5' />
                 </Link>
               </>
