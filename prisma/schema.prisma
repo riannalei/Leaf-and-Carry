@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  fulfilled
+  shipped
+  awaiting_shipment
+}
+
+enum CaseModel {
+  small
+  medium
+  large
+}
+
+enum CaseMaterial {
+  cotton
+  linen
+}
+
+enum CaseFinish {
+  normal
+  glossy
+}
+
+enum CaseColor {
+  natural
+  cream
+  pink
+}
+
+model Configuration {
+  id String @id @default(cuid())
+  width Int
+  height Int
+  imageUrl String
+  color CaseColor?
+  model CaseModel?
+  material CaseMaterial?
+  finish CaseFinish?
+  croppedImageURl String?
+}

@@ -8,19 +8,19 @@ const STEPS = [
     name: 'Step 1: Add image',
     description: 'Choose an image for your case',
     url: '/upload',
-    imgSrc: '/cactusears.svg'  // Corrected path to use directly
+    imgSrc: '/cactusears.svg' 
   },
   {
     name: 'Step 2: Customize design',
     description: 'Make the case yours',
     url: '/design',
-    imgSrc: '/cactusnorm.svg'  // Corrected path to use directly
+    imgSrc: '/cactusnorm.svg'  
   },
   {
     name: 'Step 3: Summary',
     description: 'Review your final design',
     url: '/preview',
-    imgSrc: '/cactuspointy.svg'  // Corrected path to use directly
+    imgSrc: '/cactuspointy.svg'  
   },
 ]
 
