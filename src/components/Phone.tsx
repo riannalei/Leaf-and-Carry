@@ -21,22 +21,23 @@ const Phone = ({ imgSrc, className, ...props }: ToteBagProps) => {
       />
 
       {/* Overlay Image */}
-      <div className='absolute inset-0 flex items-center justify-center'>
-        <img
-        // className='object-cover min-w-full min-h-ful'
-          src={imgSrc}
-          className='object-cover rounded-lg' // Maintaining rounded edges
-          style={{
-            position: 'absolute',
-            top: '68%', // Adjust to fit the tote bag perfectly
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '58%', // Adjusted for a square size relative to the tote bag width
-            height: '47%', // Keep it proportional
-          }}
-          alt='Custom Design Overlay'
-        />
-      </div>
+<div className='absolute inset-0 flex items-center justify-center'>
+  <img
+    src={imgSrc}
+    className='object-cover rounded-lg' // Keeping the image rounded, as desired
+    style={{
+      position: 'absolute',
+      top: '68%', // Adjusted to fit the tote bag better
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '60%', // Adjusted size to cover more of the bag
+      height: 'auto', // Keep the aspect ratio consistent
+      maxHeight: '70%', // Prevents overflow from the bottom
+    }}
+    alt='Custom Design Overlay'
+  />
+</div>
+
     </div>
   );
 };

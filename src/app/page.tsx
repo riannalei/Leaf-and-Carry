@@ -225,24 +225,29 @@ export default function Home() {
           </div>
 
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <div className="relative flex flex-col md:flex-row items-center md:justify-between gap-80">
-              {/* <div className='relative flex flex-col md:flex-row items-center md:justify-between gap-16'> */}
-              <img
-                src="/arrow.png"
-                className="absolute top-[25rem] md:top-1/2 -translate-y-1/2 z-10 left-1/2 -translate-x-1/2 rotate-90 md:rotate-0"
-              />
+  <div className="relative flex flex-col md:flex-row items-center md:justify-between gap-16">
+    {/* Centered Arrow Image */}
+    <img
+      src="/arrow.png"
+      className="absolute top-1/2 -translate-y-1/2 z-10 left-1/2 -translate-x-1/2 rotate-90 md:rotate-0"
+    />
 
-              <div className="relative h-90 md:h-full w-full md:justify-self-end max-w-sm rounded-xl  ring-inset ring-[#E3E8E5] lg:rounded-2xl">
-                <img
-                  src="/3.png"
-                  className="rounded-md object-cover bg-[#F0F4F1] shadow-2xl ring-1 ring-[#E3E8E5]"
-                  style={{ marginTop: "60px" }} // Adjust value as needed
-                />
-              </div>
+    {/* First Image Container - Smaller Size */}
+    <div className="relative h-auto md:h-full w-full max-w-xs rounded-xl ring-inset ring-[#E3E8E5] lg:rounded-2xl">
+      <img
+        src="/3.png"
+        className="rounded-md object-cover bg-[#F0F4F1] shadow-2xl ring-1 ring-[#E3E8E5]"
+        style={{ marginTop: "140px", marginLeft: "80px", width: "80%", height: "auto" }} // Adjusted size to be smaller
+      />
+    </div>
 
-              <Phone className="w-40" imgSrc="/3.png" />
-            </div>
-          </div>
+    {/* Second Image Component - Tote Bag */}
+    <div className="relative w-full max-w-sm md:ml-12 lg:ml-16"> {/* Added margin to move to the right */}
+      <Phone className="w-full" imgSrc="/3.png" />
+    </div>
+  </div>
+</div>
+
 
           <ul className="mx-auto mt-12 max-w-prose sm:text-lg space-y-2 w-fit">
             <li className="w-fit">
