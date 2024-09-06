@@ -1,40 +1,28 @@
-'use client'
+'use client';
 
-import HandleComponent from '@/components/HandleComponent'
-import { AspectRatio } from '@/components/ui/aspect-ratio'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { cn, formatPrice } from '@/lib/utils'
-import NextImage from 'next/image'
-import { Rnd } from 'react-rnd'
-import { RadioGroup } from '@headlessui/react'
-import { useRef, useState } from 'react'
-import {
-  COLORS,
-  FINISHES,
-  MATERIALS,
-  MODELS,
-} from '@/validators/option-validator'
-import { Label } from '@/components/ui/label'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { ArrowRight, Check, ChevronsUpDown } from 'lucide-react'
-
-import { BASE_PRICE, PRODUCT_PRICES } from '@/config/products'
-import { useUploadThing } from '@/lib/uploadthing'
-import { useToast } from '@/components/ui/use-toast'
-import { useMutation } from '@tanstack/react-query'
-import { saveConfig as _saveConfig, SaveConfigArgs } from './actions'
-import { useRouter } from 'next/navigation'
+import HandleComponent from '@/components/HandleComponent';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn, formatPrice } from '@/lib/utils';
+import NextImage from 'next/image';
+import { Rnd } from 'react-rnd';
+import { RadioGroup } from '@headlessui/react';
+import { useRef, useState } from 'react';
+import { COLORS, FINISHES, MATERIALS, MODELS } from '@/validators/option-validator';
+import { Label } from '@/components/ui/label';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Check, ChevronsUpDown } from 'lucide-react';
+import { BASE_PRICE, PRODUCT_PRICES } from '@/config/products';
+import { useUploadThing } from '@/lib/uploadthing';
+import { useToast } from '@/components/ui/use-toast';
+import { useMutation } from '@tanstack/react-query';
+import { saveConfig as _saveConfig, SaveConfigArgs } from './actions';
+import { useRouter } from 'next/navigation';
 
 interface DesignConfiguratorProps {
-  configId: string
-  imageUrl: string
-  imageDimensions: { width: number; height: number }
+  configId: string;
+  imageUrl: string;
+  imageDimensions: { width: number; height: number };
 }
 
 const DesignConfigurator = ({
@@ -43,179 +31,198 @@ const DesignConfigurator = ({
   imageDimensions,
 }: DesignConfiguratorProps) => {
   const { toast } = useToast();
-  const router = useRouter()
+  const router = useRouter();
 
   const { mutate: saveConfig, isPending } = useMutation({
     mutationKey: ['save-config'],
     mutationFn: async (args: SaveConfigArgs) => {
-      await Promise.all([saveConfiguration(), _saveConfig(args)])
+      await Promise.all([saveConfiguration(), _saveConfig(args)]);
     },
     onError: () => {
       toast({
         title: 'Something went wrong',
         description: 'There was an error on our end. Please try again.',
         variant: 'destructive',
-      })
+      });
     },
     onSuccess: () => {
-      router.push(`/configure/preview?id=${configId}`)
+      router.push(`/configure/preview?id=${configId}`);
     },
-  })
+  });
 
   const [options, setOptions] = useState<{
-    color: (typeof COLORS)[number]
-    model: (typeof MODELS.options)[number]
-    material: (typeof MATERIALS.options)[number]
-    finish: (typeof FINISHES.options)[number]
+    color: (typeof COLORS)[number];
+    model: (typeof MODELS.options)[number];
+    material: (typeof MATERIALS.options)[number];
+    finish: (typeof FINISHES.options)[number];
   }>({
     color: COLORS[0],
     model: MODELS.options[0],
     material: MATERIALS.options[0],
     finish: FINISHES.options[0],
-  })
+  });
 
   const [renderedDimension, setRenderedDimension] = useState({
-    width: imageDimensions.width / 4,
-    height: imageDimensions.height / 4,
-  })
+    width: imageDimensions.width / 3,
+    height: imageDimensions.height / 3,
+  });
 
   const [renderedPosition, setRenderedPosition] = useState({
-    x: 150,
-    y: 205,
-  })
+    x: 50,
+    y: 100,
+  });
 
-  const phoneCaseRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imageAreaRef = useRef<HTMLDivElement>(null);
 
-  const { startUpload } = useUploadThing('imageUploader')
+  const { startUpload } = useUploadThing('imageUploader');
 
   async function saveConfiguration() {
     try {
-      const {
-        left: caseLeft,
-        top: caseTop,
-        width,
-        height,
-      } = phoneCaseRef.current!.getBoundingClientRect()
-
-      const { left: containerLeft, top: containerTop } =
-        containerRef.current!.getBoundingClientRect()
-
-      const leftOffset = caseLeft - containerLeft
-      const topOffset = caseTop - containerTop
-
-      const actualX = renderedPosition.x - leftOffset
-      const actualY = renderedPosition.y - topOffset
-
-      const canvas = document.createElement('canvas')
-      canvas.width = width
-      canvas.height = height
-      const ctx = canvas.getContext('2d')
-
-      const userImage = new Image()
-      userImage.crossOrigin = 'anonymous'
-      userImage.src = imageUrl
-      await new Promise((resolve) => (userImage.onload = resolve))
-
+      // Set constant values for dimensions and positioning
+      const width = 320;
+      const height = 320;
+      const boxTop = 140;
+      const boxLeft = 190;
+  
+      // Assign constants to 'case' values
+      const caseWidth = width;
+      const caseHeight = height;
+      const caseTop = boxTop;
+      const caseLeft = boxLeft;
+  
+      // Get the bounding rectangle of the container
+      const { left: containerLeft, top: containerTop } = containerRef.current!.getBoundingClientRect();
+  
+      // Calculate offsets for the canvas drawing position
+      const leftOffset = caseLeft - containerLeft;
+      const topOffset = caseTop - containerTop;
+  
+      const actualX = renderedPosition.x - leftOffset;
+      const actualY = renderedPosition.y - topOffset;
+  
+      // Create a canvas and set its size
+      const canvas = document.createElement('canvas');
+      canvas.width = caseWidth;
+      canvas.height = caseHeight;
+      const ctx = canvas.getContext('2d');
+  
+      // Load the user image
+      const userImage = new Image();
+      userImage.crossOrigin = 'anonymous';
+      userImage.src = imageUrl;
+  
+      // Wait for the image to load before proceeding
+      await new Promise((resolve) => (userImage.onload = resolve));
+  
+      // Draw the user image on the canvas at the calculated position
       ctx?.drawImage(
         userImage,
         actualX,
         actualY,
         renderedDimension.width,
         renderedDimension.height
-      )
-
-      const base64 = canvas.toDataURL()
-      const base64Data = base64.split(',')[1]
-
-      const blob = base64ToBlob(base64Data, 'image/png')
-      const file = new File([blob], 'filename.png', { type: 'image/png' })
-
-      await startUpload([file], { configId })
+      );
+  
+      // Convert the canvas to a Base64 string
+      const base64 = canvas.toDataURL();
+      const base64Data = base64.split(',')[1];
+  
+      // Convert the Base64 string to a Blob
+      const blob = base64ToBlob(base64Data, 'image/png');
+      const file = new File([blob], 'filename.png', { type: 'image/png' });
+  
+      // Upload the file
+      await startUpload([file], { configId });
     } catch (err) {
+      // Handle any errors that occur during the process
       toast({
         title: 'Something went wrong',
-        description:
-          'There was a problem saving your config, please try again.',
+        description: 'There was a problem saving your config, please try again.',
         variant: 'destructive',
-      })
+      });
     }
   }
 
+  
+
   function base64ToBlob(base64: string, mimeType: string) {
-    const byteCharacters = atob(base64)
-    const byteNumbers = new Array(byteCharacters.length)
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i)
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
-    const byteArray = new Uint8Array(byteNumbers)
-    return new Blob([byteArray], { type: mimeType })
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
   }
 
   return (
     <div className='relative mt-20 grid grid-cols-1 lg:grid-cols-3 mb-20 pb-20'>
       <div
         ref={containerRef}
-        className='relative h-[37.5rem] overflow-hidden col-span-2 w-full max-w-4xl flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'>
-        <div className='relative w-60 bg-opacity-50 pointer-events-none aspect-[896/1831]'>
-          <AspectRatio
-            ref={phoneCaseRef}
-            ratio={896 / 1831}
-            className='pointer-events-none relative z-50 aspect-[896/1831] w-full'>
-            <NextImage
-              fill
-              alt='phone image'
-              src='/tote.png'
-              className='pointer-events-none z-50 select-none'
-            />
-          </AspectRatio>
-          <div className='absolute z-40 inset-0 left-[3px] top-px right-[3px] bottom-px rounded-[32px] shadow-[0_0_0_99999px_rgba(229,231,235,0.6)]' />
-          <div
-            className={cn(
-              'absolute inset-0 left-[3px] top-px right-[3px] bottom-px rounded-[32px]',
-              options.color.value !== 'none' ? options.color.tw.bg : ''
-            )}
-          />
-        </div>
+        className='relative h-[37.5rem] overflow-hidden col-span-2 w-full max-w-4xl flex items-center justify-center rounded-lg border-2 border-dashed bg-gray-100 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'>
+        
+        {/* Tote Bag Background */}
+        <NextImage src='/tote.png' alt='tote image' width={400} height={600} className='absolute' />
 
-        <Rnd
-          default={{
-            x: 150,
-            y: 205,
-            height: imageDimensions.height / 4,
-            width: imageDimensions.width / 4,
-          }}
-          onResizeStop={(_, __, ref, ___, { x, y }) => {
-            setRenderedDimension({
-              height: parseInt(ref.style.height.slice(0, -2)),
-              width: parseInt(ref.style.width.slice(0, -2)),
-            })
-
-            setRenderedPosition({ x, y })
-          }}
-          onDragStop={(_, data) => {
-            const { x, y } = data
-            setRenderedPosition({ x, y })
-          }}
-          className='absolute z-20 border-[3px] border-primary'
-          lockAspectRatio
-          resizeHandleComponent={{
-            bottomRight: <HandleComponent />,
-            bottomLeft: <HandleComponent />,
-            topRight: <HandleComponent />,
-            topLeft: <HandleComponent />,
+        {/* Defined Image Area Box */}
+        <div
+          ref={imageAreaRef}
+          className={cn(
+            'relative z-40 border border-gray-300 rounded-md',
+            options.color.value !== 'natural' ? options.color.tw.bg : ''
+          )}
+          style={{
+            width: '230px',  // Define the box width
+            height: '230px', // Define the box height
+            top: '85px',    // Adjust to fit on the tote bag
+            left: '0px',    // Adjust to fit on the tote bag
           }}>
-          <div className='relative w-full h-full'>
-            <NextImage
-              src={imageUrl}
-              fill
-              alt='your image'
-              className='pointer-events-none'
-            />
-          </div>
-        </Rnd>
+          {/* User Image within the defined area */}
+          <Rnd
+  default={{
+    x: 150,
+    y: 205,
+    height: imageDimensions.height / 4,
+    width: imageDimensions.width / 4,
+  }}
+  onResizeStop={(_, __, ref, ___, { x, y }) => {
+    setRenderedDimension({
+      height: parseInt(ref.style.height.slice(0, -2)),
+      width: parseInt(ref.style.width.slice(0, -2)),
+    });
+
+    setRenderedPosition({ x, y });
+  }}
+  onDragStop={(_, data) => {
+    const { x, y } = data;
+    setRenderedPosition({ x, y });
+  }}
+  className="absolute z-20 border-[3px] border-primary"
+  lockAspectRatio
+  bounds={false} // Allow the image to move freely outside the box
+  resizeHandleComponent={{
+    bottomRight: <HandleComponent />,
+    bottomLeft: <HandleComponent />,
+    topRight: <HandleComponent />,
+    topLeft: <HandleComponent />,
+  }}
+>
+  <div className="relative w-full h-full">
+    <NextImage
+      src={imageUrl}
+      fill
+      alt="your image"
+      className="pointer-events-none"
+    />
+  </div>
+</Rnd>
+
+
+        </div>
       </div>
 
+    {/* UI Controls */}
       <div className='h-[37.5rem] w-full col-span-full lg:col-span-1 flex flex-col bg-white'>
         <ScrollArea className='relative flex-1 overflow-auto'>
           <div
@@ -266,7 +273,7 @@ const DesignConfigurator = ({
                 </RadioGroup>
 
                 <div className='relative flex flex-col gap-3 w-full'>
-                  <Label>Size</Label> {/* Changed from Model to Size */}
+                  <Label>Size</Label>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
@@ -410,4 +417,4 @@ const DesignConfigurator = ({
   )
 }
 
-export default DesignConfigurator
+export default DesignConfigurator;

@@ -1,31 +1,18 @@
+// bg-[#E6E3DC] border-[#C7C4B8]
+// bg-[#F5F3E7] border-[#E8E6D4]
+// bg-[#F7D6E0] border-[#F5B7C7]
+
+
 import { PRODUCT_PRICES } from '@/config/products'
 
+// Example snippet for updating color options in your configurator
+
 export const COLORS = [
-    {
-      label: 'Natural',  
-      value: 'natural',  
-      tw: {
-        bg: 'bg-transparent',      // bg-transparent border-transparent for Natural
-        border: 'border-transparent',
-      },
-    },
-    {
-      label: 'Cream',  // Changed from 'White' to 'Cream'
-      value: 'cream',  // Updated value to 'cream'
-      tw: {
-        bg: 'bg-amber-50',        // bg-amber-100 border-amber-100 for Cream
-        border: 'border-amber-50',
-      },
-    },
-    {
-      label: 'Pink',
-      value: 'pink',
-      tw: {
-        bg: 'bg-pink-200',        // bg-pink-200 border-pink-200 for Light Pink
-        border: 'border-pink-200',
-      },
-    },
-  ] as const;
+  { label: 'Natural', value: 'natural', tw: { bg: 'bg-[#E6E3DC]', border: 'border-[#C7C4B8]' } },
+  { label: 'Cream', value: 'cream', tw: { bg: 'bg-[#F5F3E7]', border: 'border-[#E8E6D4]' } },
+  { label: 'Pink', value: 'pink', tw: { bg: 'bg-[#F7D6E0]', border: 'border-[#F5B7C7]' } },
+] as const;
+
 
 export const MODELS = {
   name: 'models',
