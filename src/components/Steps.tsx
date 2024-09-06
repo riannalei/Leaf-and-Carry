@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { cn } from '@/lib/utils'
 import { usePathname } from "next/navigation"
@@ -6,13 +6,13 @@ import { usePathname } from "next/navigation"
 const STEPS = [
   {
     name: 'Step 1: Add image',
-    description: 'Choose an image for your case',
+    description: 'Choose an image for your tote',
     url: '/upload',
     imgSrc: '/cactusears.svg' 
   },
   {
     name: 'Step 2: Customize design',
-    description: 'Make the case yours',
+    description: 'Make the tote yours',
     url: '/design',
     imgSrc: '/cactusnorm.svg'  
   },
@@ -28,7 +28,7 @@ const Steps = () => {
   const pathname = usePathname()
 
   return (
-    <ol className='rounded-md bg-white lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-200'>
+    <ol className='rounded-md bg-white lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-[#A7B59E]'>
       {STEPS.map((step, i) => {
         const isCurrent = pathname.endsWith(step.url)
         const isCompleted = STEPS.slice(i + 1).some((step) =>
@@ -40,10 +40,10 @@ const Steps = () => {
             <div>
               <span
                 className={cn(
-                  'absolute left-0 top-0 h-full w-1 bg-zinc-400 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full',
+                  'absolute left-0 top-0 h-full w-1 bg-[#A7B59E] lg:bottom-0 lg:top-auto lg:h-1 lg:w-full',
                   {
-                    'bg-zinc-700': isCurrent,
-                    'bg-primary': isCompleted,
+                    'bg-[#5B744B]': isCurrent,  // Current step color
+                    'bg-[#A7B59E]': isCompleted,  // Completed step color
                   }
                 )}
                 aria-hidden='true'
@@ -56,12 +56,12 @@ const Steps = () => {
                 )}>
                 <span className='flex-shrink-0'>
                   <img
-                    src={step.imgSrc}  // Use the provided image path directly from STEPS
+                    src={step.imgSrc}
                     className={cn(
                       'flex h-20 w-20 object-contain items-center justify-center',
                       {
                         'border-none': isCompleted,
-                        'border-zinc-700': isCurrent,
+                        'border-[#5B744B]': isCurrent,  // Border color for current step
                       }
                     )}
                     alt={step.name}
@@ -70,14 +70,14 @@ const Steps = () => {
 
                 <span className='ml-4 h-full mt-0.5 flex min-w-0 flex-col justify-center'>
                   <span
-                    className={cn('text-sm font-semibold text-zinc-700', {
-                      'text-primary': isCompleted,
-                      'text-zinc-700': isCurrent,
+                    className={cn('text-sm font-semibold text-[#5B744B]', {
+                      'text-[#A7B59E]': isCompleted,  // Text color for completed step
+                      'text-[#5B744B]': isCurrent,  // Text color for current step
                     })}
                   >
                     {step.name}
                   </span>
-                  <span className='text-sm text-zinc-500'>
+                  <span className='text-sm text-[#799567]'>
                     {step.description}
                   </span>
                 </span>
@@ -87,7 +87,7 @@ const Steps = () => {
               {i !== 0 ? (
                 <div className='absolute inset-0 hidden w-3 lg:block'>
                   <svg
-                    className='h-full w-full text-gray-300'
+                    className='h-full w-full text-[#5B744B]'  
                     viewBox='0 0 12 82'
                     fill='none'
                     preserveAspectRatio='none'

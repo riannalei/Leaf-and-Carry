@@ -79,43 +79,34 @@ const DesignConfigurator = ({
 
   async function saveConfiguration() {
     try {
-      // Set constant values for dimensions and positioning
       const width = 320;
       const height = 320;
       const boxTop = 140;
       const boxLeft = 190;
-  
-      // Assign constants to 'case' values
+
       const caseWidth = width;
       const caseHeight = height;
       const caseTop = boxTop;
       const caseLeft = boxLeft;
-  
-      // Get the bounding rectangle of the container
+
       const { left: containerLeft, top: containerTop } = containerRef.current!.getBoundingClientRect();
-  
-      // Calculate offsets for the canvas drawing position
       const leftOffset = caseLeft - containerLeft;
       const topOffset = caseTop - containerTop;
-  
+
       const actualX = renderedPosition.x - leftOffset;
       const actualY = renderedPosition.y - topOffset;
-  
-      // Create a canvas and set its size
+
       const canvas = document.createElement('canvas');
       canvas.width = caseWidth;
       canvas.height = caseHeight;
       const ctx = canvas.getContext('2d');
-  
-      // Load the user image
+
       const userImage = new Image();
       userImage.crossOrigin = 'anonymous';
       userImage.src = imageUrl;
-  
-      // Wait for the image to load before proceeding
+
       await new Promise((resolve) => (userImage.onload = resolve));
-  
-      // Draw the user image on the canvas at the calculated position
+
       ctx?.drawImage(
         userImage,
         actualX,
@@ -123,19 +114,14 @@ const DesignConfigurator = ({
         renderedDimension.width,
         renderedDimension.height
       );
-  
-      // Convert the canvas to a Base64 string
+
       const base64 = canvas.toDataURL();
       const base64Data = base64.split(',')[1];
-  
-      // Convert the Base64 string to a Blob
       const blob = base64ToBlob(base64Data, 'image/png');
       const file = new File([blob], 'filename.png', { type: 'image/png' });
-  
-      // Upload the file
+
       await startUpload([file], { configId });
     } catch (err) {
-      // Handle any errors that occur during the process
       toast({
         title: 'Something went wrong',
         description: 'There was a problem saving your config, please try again.',
@@ -143,8 +129,6 @@ const DesignConfigurator = ({
       });
     }
   }
-
-  
 
   function base64ToBlob(base64: string, mimeType: string) {
     const byteCharacters = atob(base64);
@@ -160,8 +144,7 @@ const DesignConfigurator = ({
     <div className='relative mt-20 grid grid-cols-1 lg:grid-cols-3 mb-20 pb-20'>
       <div
         ref={containerRef}
-        className='relative h-[37.5rem] overflow-hidden col-span-2 w-full max-w-4xl flex items-center justify-center rounded-lg border-2 border-dashed bg-gray-100 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'>
-        
+        className='relative h-[37.5rem] overflow-hidden col-span-2 w-full max-w-4xl flex items-center justify-center rounded-lg border-2 border-dashed bg-[#F5F7F2] p-12 text-center focus:outline-none focus:ring-2 focus:ring-[#799567] focus:ring-offset-2'>
         {/* Tote Bag Background */}
         <NextImage src='/tote.png' alt='tote image' width={400} height={600} className='absolute' />
 
@@ -169,60 +152,58 @@ const DesignConfigurator = ({
         <div
           ref={imageAreaRef}
           className={cn(
-            'relative z-40 border border-gray-300 rounded-md',
+            'relative z-40 border border-[#A7B59E] rounded-md',
             options.color.value !== 'natural' ? options.color.tw.bg : ''
           )}
           style={{
-            width: '230px',  // Define the box width
-            height: '230px', // Define the box height
-            top: '85px',    // Adjust to fit on the tote bag
-            left: '0px',    // Adjust to fit on the tote bag
+            width: '230px',
+            height: '230px',
+            top: '85px',
+            left: '0px',
           }}>
           {/* User Image within the defined area */}
           <Rnd
-  default={{
-    x: 150,
-    y: 205,
-    height: imageDimensions.height / 4,
-    width: imageDimensions.width / 4,
-  }}
-  onResizeStop={(_, __, ref, ___, { x, y }) => {
-    setRenderedDimension({
-      height: parseInt(ref.style.height.slice(0, -2)),
-      width: parseInt(ref.style.width.slice(0, -2)),
-    });
+            default={{
+              x: 150,
+              y: 205,
+              height: imageDimensions.height / 4,
+              width: imageDimensions.width / 4,
+            }}
+            onResizeStop={(_, __, ref, ___, { x, y }) => {
+              setRenderedDimension({
+                height: parseInt(ref.style.height.slice(0, -2)),
+                width: parseInt(ref.style.width.slice(0, -2)),
+              });
 
-    setRenderedPosition({ x, y });
-  }}
-  onDragStop={(_, data) => {
-    const { x, y } = data;
-    setRenderedPosition({ x, y });
-  }}
-  className="absolute z-20 border-[3px] border-primary"
-  lockAspectRatio
-  bounds={false} // Allow the image to move freely outside the box
-  resizeHandleComponent={{
-    bottomRight: <HandleComponent />,
-    bottomLeft: <HandleComponent />,
-    topRight: <HandleComponent />,
-    topLeft: <HandleComponent />,
-  }}
->
-  <div className="relative w-full h-full">
-    <NextImage
-      src={imageUrl}
-      fill
-      alt="your image"
-      className="pointer-events-none"
-    />
-  </div>
-</Rnd>
-
-
+              setRenderedPosition({ x, y });
+            }}
+            onDragStop={(_, data) => {
+              const { x, y } = data;
+              setRenderedPosition({ x, y });
+            }}
+            className="absolute z-20 border-[3px] border-[#799567]"
+            lockAspectRatio
+            bounds={false}
+            resizeHandleComponent={{
+              bottomRight: <HandleComponent />,
+              bottomLeft: <HandleComponent />,
+              topRight: <HandleComponent />,
+              topLeft: <HandleComponent />,
+            }}
+          >
+            <div className="relative w-full h-full">
+              <NextImage
+                src={imageUrl}
+                fill
+                alt="your image"
+                className="pointer-events-none"
+              />
+            </div>
+          </Rnd>
         </div>
       </div>
 
-    {/* UI Controls */}
+      {/* UI Controls */}
       <div className='h-[37.5rem] w-full col-span-full lg:col-span-1 flex flex-col bg-white'>
         <ScrollArea className='relative flex-1 overflow-auto'>
           <div
@@ -231,11 +212,11 @@ const DesignConfigurator = ({
           />
 
           <div className='px-8 pb-12 pt-8'>
-            <h2 className='tracking-tight font-bold text-3xl'>
+            <h2 className='tracking-tight font-bold text-3xl text-[#35522B]'>
               Customize your tote
             </h2>
 
-            <div className='w-full h-px bg-zinc-200 my-6' />
+            <div className='w-full h-px bg-[#A7B59E] my-6' />
 
             <div className='relative mt-4 h-full flex flex-col justify-between'>
               <div className='flex flex-col gap-6'>
@@ -247,7 +228,7 @@ const DesignConfigurator = ({
                       color: val,
                     }))
                   }}>
-                  <Label>Color: {options.color.label}</Label>
+                  <Label className='text-[#35522B]'>Color: {options.color.label}</Label>
                   <div className='mt-3 flex items-center space-x-3'>
                     {COLORS.map((color) => (
                       <RadioGroup.Option
@@ -273,13 +254,13 @@ const DesignConfigurator = ({
                 </RadioGroup>
 
                 <div className='relative flex flex-col gap-3 w-full'>
-                  <Label>Size</Label>
+                  <Label className='text-[#35522B]'>Size</Label>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant='outline'
                         role='combobox'
-                        className='w-full justify-between'>
+                        className='w-full justify-between text-[#35522B] hover:bg-[#F8D0C8]'>
                         {options.model.label}
                         <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                       </Button>
@@ -289,10 +270,9 @@ const DesignConfigurator = ({
                         <DropdownMenuItem
                           key={model.label}
                           className={cn(
-                            'flex text-sm gap-1 items-center p-1.5 cursor-default hover:bg-zinc-100',
+                            'flex text-sm gap-1 items-center p-1.5 cursor-default hover:bg-[#F9DDD8]',
                             {
-                              'bg-zinc-100':
-                                model.label === options.model.label,
+                              'bg-[#F9DDD8]': model.label === options.model.label,
                             }
                           )}
                           onClick={() => {
@@ -302,7 +282,7 @@ const DesignConfigurator = ({
                             className={cn(
                               'mr-2 h-4 w-4',
                               model.label === options.model.label
-                                ? 'opacity-100'
+                                ? 'opacity-100 text-[#35522B]'
                                 : 'opacity-0'
                             )}
                           />
@@ -324,7 +304,7 @@ const DesignConfigurator = ({
                           [name]: val,
                         }))
                       }}>
-                      <Label>
+                      <Label className='text-[#35522B]'>
                         {name.slice(0, 1).toUpperCase() + name.slice(1)}
                       </Label>
                       <div className='mt-3 space-y-4'>
@@ -334,16 +314,16 @@ const DesignConfigurator = ({
                             value={option}
                             className={({ active, checked }) =>
                               cn(
-                                'relative block cursor-pointer rounded-lg bg-white px-6 py-4 shadow-sm border-2 border-zinc-200 focus:outline-none ring-0 focus:ring-0 outline-none sm:flex sm:justify-between',
+                                'relative block cursor-pointer rounded-lg bg-white px-6 py-4 shadow-sm border-2 border-[#A7B59E] focus:outline-none ring-0 focus:ring-0 outline-none sm:flex sm:justify-between',
                                 {
-                                  'border-primary': active || checked,
+                                  'border-[#35522B]': active || checked,
                                 }
                               )
                             }>
                             <span className='flex items-center'>
                               <span className='flex flex-col text-sm'>
                                 <RadioGroup.Label
-                                  className='font-medium text-gray-900'
+                                  className='font-medium text-[#35522B]'
                                   as='span'>
                                   {option.label}
                                 </RadioGroup.Label>
@@ -351,7 +331,7 @@ const DesignConfigurator = ({
                                 {option.description ? (
                                   <RadioGroup.Description
                                     as='span'
-                                    className='text-gray-500'>
+                                    className='text-[#799567]'>
                                     <span className='block sm:inline'>
                                       {option.description}
                                     </span>
@@ -363,7 +343,7 @@ const DesignConfigurator = ({
                             <RadioGroup.Description
                               as='span'
                               className='mt-2 flex text-sm sm:ml-4 sm:mt-0 sm:flex-col sm:text-right'>
-                              <span className='font-medium text-gray-900'>
+                              <span className='font-medium text-[#35522B]'>
                                 {formatPrice(option.price / 100)}
                               </span>
                             </RadioGroup.Description>
@@ -379,42 +359,42 @@ const DesignConfigurator = ({
         </ScrollArea>
 
         <div className='w-full px-8 h-16 bg-white'>
-          <div className='h-px w-full bg-zinc-200' />
+          <div className='h-px w-full bg-[#A7B59E]' />
           <div className='w-full h-full flex justify-end items-center'>
             <div className='w-full flex gap-6 items-center'>
-              <p className='font-medium whitespace-nowrap'>
-              {formatPrice(
-          (
-            PRODUCT_PRICES.model[options.model.value] + // Use model price based on the selected size
-            options.finish.price +
-            options.material.price
-        ) / 100
-      )}
+              <p className='font-medium whitespace-nowrap text-[#35522B]'>
+                {formatPrice(
+                  (
+                    PRODUCT_PRICES.model[options.model.value] +
+                    options.finish.price +
+                    options.material.price
+                  ) / 100
+                )}
               </p>
               <Button
-    isLoading={isPending}
-    disabled={isPending}
-    loadingText="Saving"
-    onClick={() =>
-      saveConfig({
-        configId,
-        color: options.color.value,
-        finish: options.finish.value,
-        material: options.material.value,
-        model: options.model.value,
-      })
-    }
-    size='sm'
-    className='w-full'>
-    Continue
-    <ArrowRight className='h-4 w-4 ml-1.5 inline' />
-  </Button>
+                isLoading={isPending}
+                disabled={isPending}
+                loadingText='Saving'
+                onClick={() =>
+                  saveConfig({
+                    configId,
+                    color: options.color.value,
+                    finish: options.finish.value,
+                    material: options.material.value,
+                    model: options.model.value,
+                  })
+                }
+                size='sm'
+                className='w-full bg-[#799567] text-white hover:bg-[#5B744B]'>
+                Continue
+                <ArrowRight className='h-4 w-4 ml-1.5 inline' />
+              </Button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default DesignConfigurator;

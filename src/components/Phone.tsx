@@ -23,6 +23,7 @@ const Phone = ({ imgSrc, className, ...props }: ToteBagProps) => {
       {/* Overlay Image */}
       <div className='absolute inset-0 flex items-center justify-center'>
         <img
+        // className='object-cover min-w-full min-h-ful'
           src={imgSrc}
           className='object-cover rounded-lg' // Maintaining rounded edges
           style={{
