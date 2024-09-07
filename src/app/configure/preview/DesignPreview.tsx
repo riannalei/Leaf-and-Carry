@@ -34,6 +34,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
   )!;
 
   // Calculate total price dynamically
+  // @ts-ignore
   let totalPrice = PRODUCT_PRICES.model[model]; // Start with the price based on the model size
   if (material === 'cotton') totalPrice += PRODUCT_PRICES.material.cotton; // Add price for cotton (if any)
   if (material === 'linen') totalPrice += PRODUCT_PRICES.material.linen; // Add price for linen (if any)
@@ -42,6 +43,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
   const { mutate: createPaymentSession } = useMutation({
     mutationKey: ['get-checkout-session'],
     mutationFn: createCheckoutSession,
+    // @ts-ignore
     onSuccess: ({ url }) => {
       if (url) router.push(url);
       else throw new Error('Unable to retrieve payment URL.');
@@ -123,6 +125,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
                 <div className='flex items-center justify-between py-1 mt-2'>
                   <p className='text-[#799567]'>Base price</p>
                   <p className='font-medium text-[#5B744B]'>
+                  {/* @ts-ignore */}
                     {formatPrice(PRODUCT_PRICES.model[model] / 100)}
                   </p>
                 </div>

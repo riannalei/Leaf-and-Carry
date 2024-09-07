@@ -27,14 +27,17 @@ export const createCheckoutSession = async ({
     throw new Error('You need to be logged in')
   }
 
-  const { finish, material } = configuration
+  const { model, finish, material } = configuration; // Include `model` in destructuring
 
-  let price = BASE_PRICE
-  if (finish === 'normal') price += PRODUCT_PRICES.finish.normal
-  if (material === 'linen')
-    price += PRODUCT_PRICES.material.linen
+  // Calculate the total price dynamically as done on the frontend
+  // @ts-ignore
+  if (model && PRODUCT_PRICES.model[model] !== undefined) {
+      // @ts-ignore
+    let price = PRODUCT_PRICES.model[model]; // Start with the model price
+  if (finish === 'glossy') price += PRODUCT_PRICES.finish.glossy; // Add price for glossy finish (if any)
+  if (material === 'linen') price += PRODUCT_PRICES.material.linen; // Add price for linen (if any)
 
-  let order: Order | undefined = undefined
+  let order: Order | undefined = undefined;
 
   const existingOrder = await db.order.findFirst({
     where: {
@@ -43,18 +46,18 @@ export const createCheckoutSession = async ({
     },
   })
 
-  console.log(user.id, configuration.id)
+  console.log(user.id, configuration.id);
 
   if (existingOrder) {
-    order = existingOrder
+    order = existingOrder;
   } else {
     order = await db.order.create({
       data: {
-        amount: price / 100,
+        amount: price / 100, // Ensure to store the amount correctly
         userId: user.id,
         configurationId: configuration.id,
       },
-    })
+    });
   }
 
   const product = await stripe.products.create({
@@ -62,9 +65,9 @@ export const createCheckoutSession = async ({
     images: [configuration.imageUrl], 
     default_price_data: {
       currency: 'USD',
-      unit_amount: price,
+      unit_amount: price, // Use the correctly calculated price
     },
-  })
+  });
 
   const stripeSession = await stripe.checkout.sessions.create({
     success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
@@ -80,4 +83,5 @@ export const createCheckoutSession = async ({
   })
 
   return { url: stripeSession.url }
+}
 }

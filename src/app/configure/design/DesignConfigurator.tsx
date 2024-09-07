@@ -183,7 +183,7 @@ const DesignConfigurator = ({
             }}
             className="absolute z-20 border-[3px] border-[#799567]"
             lockAspectRatio
-            bounds={false}
+            bounds={undefined}
             resizeHandleComponent={{
               bottomRight: <HandleComponent />,
               bottomLeft: <HandleComponent />,
