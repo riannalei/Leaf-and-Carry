@@ -15,25 +15,34 @@ export async function POST(req: Request) {
     const signature = stripeHeaders.get('stripe-signature');
 
     if (!signature) {
+      console.error('Missing stripe-signature header');
       return new Response('Invalid signature', { status: 400 });
     }
 
-    const event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
+    let event: Stripe.Event;
+    try {
+      event = stripe.webhooks.constructEvent(
+        body,
+        signature,
+        process.env.STRIPE_WEBHOOK_SECRET!
+      );
+    } catch (error) {
+      console.error('Error verifying Stripe webhook signature:', error);
+      return new Response('Webhook signature verification failed', { status: 400 });
+    }
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
 
       if (!session.customer_details?.email) {
+        console.error('Missing user email in session data');
         throw new Error('Missing user email');
       }
 
       const { userId, orderId } = session.metadata || { userId: null, orderId: null };
 
       if (!userId || !orderId) {
+        console.error('Invalid metadata in session:', session.metadata);
         throw new Error('Invalid request metadata');
       }
 
@@ -41,9 +50,11 @@ export async function POST(req: Request) {
       const shippingAddress = session.shipping_details?.address;
 
       if (!shippingAddress || !billingAddress) {
+        console.error('Invalid address details in session data');
         throw new Error('Invalid address details');
       }
 
+      // Update the order in the database
       const updatedOrder = await db.order.update({
         where: {
           id: orderId,
@@ -95,9 +106,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ result: event, ok: true });
     }
 
+    console.warn('Unhandled event type:', event.type);
     return NextResponse.json({ message: 'Unhandled event type', ok: false }, { status: 400 });
   } catch (err) {
-    console.error(err);
+    console.error('Error processing webhook:', err);
     return NextResponse.json(
       { message: 'Something went wrong', ok: false },
       { status: 500 }
