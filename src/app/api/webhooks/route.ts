@@ -1,8 +1,8 @@
-import { db } from '@/db';
-import { stripe } from '@/lib/stripe';
-import { headers } from 'next/headers';
-import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { db } from "@/db";
+import { stripe } from "@/lib/stripe";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
+import Stripe from "stripe";
 // import { Resend } from 'resend';
 // import OrderReceivedEmail from '@/components/emails/OrderReceivedEmail';
 
@@ -12,11 +12,11 @@ export async function POST(req: Request) {
   try {
     const body = await req.text();
     const stripeHeaders = headers();
-    const signature = stripeHeaders.get('stripe-signature');
+    const signature = stripeHeaders.get("stripe-signature");
 
     if (!signature) {
-      console.error('Missing stripe-signature header');
-      return new Response('Invalid signature', { status: 400 });
+      console.error("Missing stripe-signature header");
+      return new Response("Invalid signature", { status: 400 });
     }
 
     let event: Stripe.Event;
@@ -27,31 +27,36 @@ export async function POST(req: Request) {
         process.env.STRIPE_WEBHOOK_SECRET!
       );
     } catch (error) {
-      console.error('Error verifying Stripe webhook signature:', error);
-      return new Response('Webhook signature verification failed', { status: 400 });
+      console.error("Error verifying Stripe webhook signature:", error);
+      return new Response("Webhook signature verification failed", {
+        status: 400,
+      });
     }
 
-    if (event.type === 'checkout.session.completed') {
+    if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
 
       if (!session.customer_details?.email) {
-        console.error('Missing user email in session data');
-        throw new Error('Missing user email');
+        console.error("Missing user email in session data");
+        throw new Error("Missing user email");
       }
 
-      const { userId, orderId } = session.metadata || { userId: null, orderId: null };
+      const { userId, orderId } = session.metadata || {
+        userId: null,
+        orderId: null,
+      };
 
       if (!userId || !orderId) {
-        console.error('Invalid metadata in session:', session.metadata);
-        throw new Error('Invalid request metadata');
+        console.error("Invalid metadata in session:", session.metadata);
+        throw new Error("Invalid request metadata");
       }
 
       const billingAddress = session.customer_details.address;
       const shippingAddress = session.shipping_details?.address;
 
       if (!shippingAddress || !billingAddress) {
-        console.error('Invalid address details in session data');
-        throw new Error('Invalid address details');
+        console.error("Invalid address details in session data");
+        throw new Error("Invalid address details");
       }
 
       // Update the order in the database
@@ -106,12 +111,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ result: event, ok: true });
     }
 
-    console.warn('Unhandled event type:', event.type);
-    return NextResponse.json({ message: 'Unhandled event type', ok: false }, { status: 400 });
-  } catch (err) {
-    console.error('Error processing webhook:', err);
+    console.warn("Unhandled event type:", event.type);
     return NextResponse.json(
-      { message: 'Something went wrong', ok: false },
+      { message: "Unhandled event type", ok: false },
+      { status: 400 }
+    );
+  } catch (err) {
+    console.error("Error processing webhook:", err);
+    return NextResponse.json(
+      { message: "Something went wrong", ok: false },
       { status: 500 }
     );
   }
