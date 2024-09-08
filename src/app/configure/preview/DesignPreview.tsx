@@ -33,6 +33,11 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
     ({ value }) => value === model
   )!;
 
+  type CheckoutSessionResponse = {
+    url: string;
+  };
+  
+
   // Calculate total price dynamically
   // @ts-ignore
   let totalPrice = PRODUCT_PRICES.model[model]; // Start with the price based on the model size
@@ -40,13 +45,20 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
   if (material === 'linen') totalPrice += PRODUCT_PRICES.material.linen; // Add price for linen (if any)
   if (finish === 'glossy') totalPrice += PRODUCT_PRICES.finish.glossy; // Add price for glossy finish (if any)
 
-  const { mutate: createPaymentSession } = useMutation({
+  const { mutate: createPaymentSession } = useMutation<
+    CheckoutSessionResponse,  // Type for the mutation's response
+    Error,                    // Type for errors
+    { configId: string }      // Type for the mutation function's variables
+  >({
     mutationKey: ['get-checkout-session'],
     mutationFn: createCheckoutSession,
-    // @ts-ignore
-    onSuccess: ({ url }) => {
-      if (url) router.push(url);
-      else throw new Error('Unable to retrieve payment URL.');
+    onSuccess: (data: CheckoutSessionResponse) => {  // Explicitly type 'data'
+      const { url } = data;  // Now 'url' is typed as 'string'
+      if (url) {
+        router.push(url);
+      } else {
+        throw new Error('Unable to retrieve payment URL.');
+      }
     },
     onError: () => {
       toast({
