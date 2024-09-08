@@ -1,3 +1,5 @@
+// currently can not send email because i have no money to buy a diomain to send it to ;-;
+
 import { db } from "@/db";
 import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
