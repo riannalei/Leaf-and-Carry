@@ -1,8 +1,7 @@
-'use client'
+'use client';
 
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { getAuthStatus } from './actions';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 
@@ -16,13 +15,19 @@ const Page = () => {
     if (configurationId) setConfigId(configurationId);
   }, []);
 
-  // Use React Query to get the authentication status
+  // Use React Query to get the authentication status from the API route
   const { data, isError, isLoading } = useQuery({
     queryKey: ['auth-callback'],
-    queryFn: async () => await getAuthStatus(),
+    queryFn: async () => {
+      const response = await fetch('/api/auth/status');
+      if (!response.ok) {
+        throw new Error('Failed to fetch authentication status');
+      }
+      return response.json();
+    },
     retry: true,
     retryDelay: 500,
-    enabled: !!configId,  // Ensure the query runs only when there is a configId
+    enabled: !!configId, // Ensure the query runs only when there is a configId
   });
 
   // Handle successful authentication
@@ -37,7 +42,7 @@ const Page = () => {
     } else if (isError) {
       // Handle errors (e.g., display an error message or redirect to an error page)
       console.error('Authentication failed');
-      router.push('/error');  // Redirect to an error page or display an error message
+      router.push('/error'); // Redirect to an error page or display an error message
     }
   }, [data, configId, router, isError]);
 
