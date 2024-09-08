@@ -42,7 +42,7 @@ The project is currently deployed on Vercel. Note that it may have some bugs in 
 - **Real-Time Communication**: Utilized webhooks for event-driven architecture and real-time updates.
 - **File Handling**: Implemented real-time file uploads and handling using UploadThing.
 
-# 📝 Feedback
+## 📝 Feedback
 
 If you have any feedback or suggestions, feel free to raise an issue or reach out!
 
