@@ -16,9 +16,9 @@ const Navbar = async () => {
         <div className='flex h-14 items-center justify-between'>
           {/* Logo */}
           <Link href='/' className='flex z-40 font-semibold items-center' aria-label='Leaf and Carry Home'>
-            <span>Leaf</span>
-            <span className='text-[#D6AFA5] mx-1'>&</span>
-            <span>Carry</span>
+            <span className='text-[#5B744B]'>Leaf</span> {/* Dark Green Color for Leaf */}
+            <span className='text-[#D6AFA5] mx-1'>&</span> {/* Light Pink Color for & */}
+            <span className='text-[#5B744B]'>Carry</span> {/* Dark Green Color for Carry */}
           </Link>
           
           {/* Navigation Links */}
