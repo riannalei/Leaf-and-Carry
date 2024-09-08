@@ -1,8 +1,6 @@
-// Import necessary modules from Next.js and Kinde SDK
+import { NextRequest, NextResponse } from 'next/server';
 import { handleAuth } from '@kinde-oss/kinde-auth-nextjs/server';
-import type { NextRequest } from 'next/server';
 
-// Define the GET handler with the correct type for Next.js App Router
 export const GET = async (req: NextRequest) => {
   console.log('Callback URL:', req.url);  // Log callback URL
 
@@ -10,6 +8,6 @@ export const GET = async (req: NextRequest) => {
   const state = url.searchParams.get('state');
   console.log('Received state from callback:', state);  // Log received state
 
-  // Return the default Kinde auth handler, adjusted for use with `NextRequest`
-  return handleAuth()(req);
+  // Use handleAuth to handle the authentication flow properly
+  return handleAuth(req, NextResponse);
 };
