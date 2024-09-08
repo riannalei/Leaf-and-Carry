@@ -46,28 +46,29 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
   if (finish === 'glossy') totalPrice += PRODUCT_PRICES.finish.glossy; // Add price for glossy finish (if any)
 
   const { mutate: createPaymentSession } = useMutation<
-    CheckoutSessionResponse,  // Type for the mutation's response
-    Error,                    // Type for errors
-    { configId: string }      // Type for the mutation function's variables
-  >({
-    mutationKey: ['get-checkout-session'],
-    mutationFn: createCheckoutSession,
-    onSuccess: (data: CheckoutSessionResponse) => {  // Explicitly type 'data'
-      const { url } = data;  // Now 'url' is typed as 'string'
-      if (url) {
-        router.push(url);
-      } else {
-        throw new Error('Unable to retrieve payment URL.');
-      }
-    },
-    onError: () => {
-      toast({
-        title: 'Uh-oh, something went wrong',
-        description: 'There was a problem processing your order. Please try again.',
-        variant: 'destructive',
-      });
-    },
-  });
+  CheckoutSessionResponse,  // Type for the mutation's response
+  Error,                    // Type for errors
+  { configId: string }      // Type for the mutation function's variables
+>({
+  mutationKey: ['get-checkout-session'],
+  mutationFn: createCheckoutSession,
+  onSuccess: (data: CheckoutSessionResponse) => {  // Explicitly type 'data'
+    const { url } = data;  // Now 'url' is typed as 'string'
+    if (url) {
+      router.push(url);
+    } else {
+      throw new Error('Unable to retrieve payment URL.');
+    }
+  },
+  onError: () => {
+    toast({
+      title: 'Uh-oh, something went wrong',
+      description: 'There was a problem processing your order. Please try again.',
+      variant: 'destructive',
+    });
+  },
+});
+
 
   const handleCheckout = () => {
     if (user) {
