@@ -22,7 +22,7 @@ The project is currently deployed on Vercel. Note that it may have some bugs in 
 ## 🛠️ Technologies Used
 
 - **Frontend**: Next.js, React, TypeScript, shadcn-ui, Tailwind CSS
-- **Backend**: Node.js, Express, MongoDB, Prisma
+- **Backend**: Node.js, Express, Prisma
 - **Database**: PostgreSQL (hosted on Neon)
 - **Authentication**: Kinde
 - **Payments**: Stripe API
