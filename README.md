@@ -17,7 +17,7 @@ Leaf & Carry is a customizable e-commerce platform for eco-friendly tote bags. I
 The project is currently deployed on Vercel. Note that it may have some bugs in the deployed version, but it works smoothly on localhost. I am actively looking for alternative deployment solutions to improve stability.
 
 - [Live Demo on Vercel](#) *(https://leaf-and-carry.vercel.app/)*
-- [Video Demo (Localhost)](#) *(in progress)*
+- [Video Demo (Localhost)](#) *(https://youtu.be/YkaMV-K-Kk4)*
 
 ## 🛠️ Technologies Used
 
