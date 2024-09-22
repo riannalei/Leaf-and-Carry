@@ -11,6 +11,7 @@ Leaf & Carry is a customizable e-commerce platform for eco-friendly tote bags. I
 - **Thank You Page**: A dedicated "Thank You" page to confirm successful payments and orders.
 - **Responsive Design**: Optimized for both desktop and mobile devices for an accessible user experience.
 - **Thank You Emails**: This feature is currently unavailable due to the absence of a domain!
+- **Webhooks**: Implemented for real-time communication and event-driven architecture
 
 ## 🚀 Deployment
 
@@ -28,7 +29,6 @@ The project is currently deployed on Vercel. Note that it may have some bugs in 
 - **Payments**: Stripe API
 - **File Uploads**: UploadThing
 - **ORM**: Prisma
-- **Webhooks**: Implemented for real-time communication and event-driven architecture
 - **Hosting**: Vercel
 
 ## 🛠️ Skills Used
