@@ -10,20 +10,19 @@ export default function Home() {
   return (
     <div className="bg-[#F0F4F1] grainy-light">
       {" "}
-      {/* Background with soft green */}
       <section>
         <MaxWidthWrapper className="pb-24 pt-10 lg:grid lg:grid-cols-3 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 xl:pt-32 lg:pb-52">
           <div className="col-span-2 px-6 lg:px-0 lg:pt-4">
             <div className="relative mx-auto text-center lg:text-left flex flex-col items-center lg:items-start">
               <div className="absolute w-40 h-40 left-0 top-[-80px] hidden lg:block">
                 {" "}
-                {/* Adjusted size and top positioning */}
+                
                 <img src="/cactuspointy.svg" className="w-full h-full" />{" "}
-                {/* Ensured the SVG uses full width and height */}
+                
               </div>
               <h1 className="relative w-fit tracking-tight text-balance mt-20 lg:mt-16 font-bold !leading-tight text-[#2D3E35] text-5xl md:text-6xl lg:text-7xl">
                 {" "}
-                {/* Adjusted margin-top */}
+                
                 Your Design on a{" "}
                 <span className="bg-[#A7B59E] px-2 text-white">
                   Custom
@@ -115,7 +114,7 @@ export default function Home() {
           </div>
         </MaxWidthWrapper>
       </section>
-      {/* value proposition section */}
+      
       <section className="bg-[#E9F1ED] grainy-dark py-24">
         <MaxWidthWrapper className="flex flex-col items-center gap-16 sm:gap-32">
           <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-6">
@@ -133,7 +132,7 @@ export default function Home() {
           <div className="mx-auto grid max-w-2xl grid-cols-1 px-4 lg:mx-0 lg:max-w-none lg:grid-cols-2 gap-y-16">
             <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
               <div className="flex gap-0.5 mb-2">
-                {/* Updated stars to have a pink color */}
+                
                 <Star className="h-5 w-5 text-[#D6AFA5] fill-[#D6AFA5]" />
                 <Star className="h-5 w-5 text-[#D6AFA5] fill-[#D6AFA5]" />
                 <Star className="h-5 w-5 text-[#D6AFA5] fill-[#D6AFA5]" />
@@ -167,10 +166,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* second user review */}
+            
             <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
               <div className="flex gap-0.5 mb-2">
-                {/* Updated stars to have a pink color */}
+                
                 <Star className="h-5 w-5 text-[#D6AFA5] fill-[#D6AFA5]" />
                 <Star className="h-5 w-5 text-[#D6AFA5] fill-[#D6AFA5]" />
                 <Star className="h-5 w-5 text-[#D6AFA5] fill-[#D6AFA5]" />
@@ -226,13 +225,13 @@ export default function Home() {
 
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
   <div className="relative flex flex-col md:flex-row items-center md:justify-between gap-16">
-    {/* Centered Arrow Image */}
+    
     <img
       src="/arrow.png"
       className="absolute top-1/2 -translate-y-1/2 z-10 left-1/2 -translate-x-1/2 rotate-90 md:rotate-0"
     />
 
-    {/* First Image Container - Smaller Size */}
+    
     <div className="relative h-auto md:h-full w-full max-w-xs rounded-xl ring-inset ring-[#E3E8E5] lg:rounded-2xl">
       <img
         src="/3.png"

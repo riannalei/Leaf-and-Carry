@@ -42,9 +42,9 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
   // Calculate total price dynamically
   // @ts-ignore
   let totalPrice = PRODUCT_PRICES.model[model]; // Start with the price based on the model size
-  if (material === "cotton") totalPrice += PRODUCT_PRICES.material.cotton; // Add price for cotton (if any)
-  if (material === "linen") totalPrice += PRODUCT_PRICES.material.linen; // Add price for linen (if any)
-  if (finish === "glossy") totalPrice += PRODUCT_PRICES.finish.glossy; // Add price for glossy finish (if any)
+  if (material === "cotton") totalPrice += PRODUCT_PRICES.material.cotton; 
+  if (material === "linen") totalPrice += PRODUCT_PRICES.material.linen; 
+  if (finish === "glossy") totalPrice += PRODUCT_PRICES.finish.glossy; 
 
   const { mutate: createPaymentSession } = useMutation({
     mutationKey: ["get-checkout-session"],

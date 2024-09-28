@@ -148,7 +148,7 @@ const DesignConfigurator = ({
         {/* Tote Bag Background */}
         <NextImage src='/tote.png' alt='tote image' width={400} height={600} className='absolute' />
 
-        {/* Defined Image Area Box */}
+        {/* Defined image Area Box */}
         <div
           ref={imageAreaRef}
           className={cn(

@@ -44,7 +44,7 @@ const LoginModal = ({
           <LoginLink
             className={buttonVariants({
               variant: 'outline',
-              className: 'hover:bg-[#F8D0C8] text-[#35522B]', // Updated button hover and text color
+              className: 'hover:bg-[#F8D0C8] text-[#35522B]', 
             })}
           >
             Login
@@ -52,7 +52,7 @@ const LoginModal = ({
           <RegisterLink
             className={buttonVariants({
               variant: 'default',
-              className: 'hover:bg-[#F8D0C8] bg-[#35522B] text-white', // Updated button hover, background, and text color
+              className: 'hover:bg-[#F8D0C8] bg-[#35522B] text-white', 
             })}
           >
             Sign up

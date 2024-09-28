@@ -42,8 +42,8 @@ const Steps = () => {
                 className={cn(
                   'absolute left-0 top-0 h-full w-1 bg-[#A7B59E] lg:bottom-0 lg:top-auto lg:h-1 lg:w-full',
                   {
-                    'bg-[#5B744B]': isCurrent,  // Current step color
-                    'bg-[#A7B59E]': isCompleted,  // Completed step color
+                    'bg-[#5B744B]': isCurrent,  
+                    'bg-[#A7B59E]': isCompleted, 
                   }
                 )}
                 aria-hidden='true'
@@ -61,7 +61,7 @@ const Steps = () => {
                       'flex h-20 w-20 object-contain items-center justify-center',
                       {
                         'border-none': isCompleted,
-                        'border-[#5B744B]': isCurrent,  // Border color for current step
+                        'border-[#5B744B]': isCurrent,  
                       }
                     )}
                     alt={step.name}
@@ -71,8 +71,8 @@ const Steps = () => {
                 <span className='ml-4 h-full mt-0.5 flex min-w-0 flex-col justify-center'>
                   <span
                     className={cn('text-sm font-semibold text-[#5B744B]', {
-                      'text-[#A7B59E]': isCompleted,  // Text color for completed step
-                      'text-[#5B744B]': isCurrent,  // Text color for current step
+                      'text-[#A7B59E]': isCompleted, 
+                      'text-[#5B744B]': isCurrent,
                     })}
                   >
                     {step.name}
@@ -83,7 +83,6 @@ const Steps = () => {
                 </span>
               </span>
 
-              {/* separator */}
               {i !== 0 ? (
                 <div className='absolute inset-0 hidden w-3 lg:block'>
                   <svg

@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import { HTMLAttributes } from 'react';
 
 interface ToteBagProps extends HTMLAttributes<HTMLDivElement> {
-  imgSrc: string; // User-uploaded image
+  imgSrc: string; 
 }
 
 const Phone = ({ imgSrc, className, ...props }: ToteBagProps) => {
@@ -10,29 +10,27 @@ const Phone = ({ imgSrc, className, ...props }: ToteBagProps) => {
     <div
       className={cn('relative pointer-events-none flex justify-center', className)}
       {...props}
-      style={{ width: '100%' }} // Ensure the div can expand fully
+      style={{ width: '100%' }} 
     >
-      {/* Tote Bag Base */}
       <img
-        src='/tote.png' // The tote bag base image
-        className='pointer-events-none select-none w-full max-w-none h-auto' // Make width full and remove max-width
-        style={{ width: '400px' }} // Set a large width directly
+        src='/tote.png' 
+        className='pointer-events-none select-none w-full max-w-none h-auto' 
+        style={{ width: '400px' }} 
         alt='Tote Bag'
       />
 
-      {/* Overlay Image */}
 <div className='absolute inset-0 flex items-center justify-center'>
   <img
     src={imgSrc}
-    className='object-cover rounded-lg' // Keeping the image rounded, as desired
+    className='object-cover rounded-lg' 
     style={{
       position: 'absolute',
-      top: '68%', // Adjusted to fit the tote bag better
+      top: '68%', 
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      width: '60%', // Adjusted size to cover more of the bag
-      height: 'auto', // Keep the aspect ratio consistent
-      maxHeight: '70%', // Prevents overflow from the bottom
+      width: '60%', 
+      height: 'auto', 
+      maxHeight: '70%', 
     }}
     alt='Custom Design Overlay'
   />

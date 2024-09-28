@@ -16,16 +16,16 @@ const Navbar = async () => {
         <div className='flex h-14 items-center justify-between'>
           {/* Logo */}
           <Link href='/' className='flex z-40 font-semibold items-center' aria-label='Leaf and Carry Home'>
-            <span className='text-[#5B744B]'>Leaf</span> {/* Dark Green Color for Leaf */}
-            <span className='text-[#D6AFA5] mx-1'>&</span> {/* Light Pink Color for & */}
-            <span className='text-[#5B744B]'>Carry</span> {/* Dark Green Color for Carry */}
+            <span className='text-[#5B744B]'>Leaf</span> 
+            <span className='text-[#D6AFA5] mx-1'>&</span> 
+            <span className='text-[#5B744B]'>Carry</span> 
           </Link>
           
-          {/* Navigation Links */}
+          
           <div className='h-full flex items-center space-x-4'>
             {user ? (
               <>
-                {/* Sign Out Link */}
+                
                 <Link
                   href='/api/auth/logout'
                   className={buttonVariants({
@@ -37,7 +37,7 @@ const Navbar = async () => {
                   Sign out
                 </Link>
 
-                {/* Admin Dashboard Link */}
+                
                 {isAdmin && (
                   <Link
                     href='/dashboard'
@@ -66,7 +66,7 @@ const Navbar = async () => {
               </>
             ) : (
               <>
-                {/* Sign Up and Login Links */}
+                
                 <Link
                   href='/api/auth/register'
                   className={buttonVariants({
@@ -89,10 +89,9 @@ const Navbar = async () => {
                   Login
                 </Link>
 
-                {/* Divider */}
                 <div className='h-8 w-px bg-[#A3C7AC] hidden sm:block' />
 
-                {/* Create Tote Link */}
+        
                 <Link
                   href='/configure/upload'
                   className={buttonVariants({

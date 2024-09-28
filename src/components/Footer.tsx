@@ -7,14 +7,14 @@ const Footer = () => {
       <MaxWidthWrapper>
         {/* Footer Content */}
         <div className='h-full flex flex-col md:flex-row md:justify-between justify-center items-center py-4'>
-          {/* Copyright Text */}
+          
           <div className='text-center md:text-left pb-2 md:pb-0'>
             <p className='text-sm text-[#35522B]'>
               &copy; {new Date().getFullYear()} Leaf & Carry. All rights reserved.
             </p>
           </div>
 
-          {/* Footer Links */}
+          
           <div className='flex items-center justify-center'>
             <div className='flex space-x-6'>
               <Link

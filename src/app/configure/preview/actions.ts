@@ -6,7 +6,7 @@ import { stripe } from '@/lib/stripe'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { Order } from '@prisma/client'
 
-//logic to create payment checkout session
+//create payment checkout session
 export const createCheckoutSession = async ({
   configId,
 }: {
@@ -27,15 +27,15 @@ export const createCheckoutSession = async ({
     throw new Error('You need to be logged in')
   }
 
-  const { model, finish, material } = configuration; // Include `model` in destructuring
+  const { model, finish, material } = configuration;
 
   // Calculate the total price dynamically as done on the frontend
   // @ts-ignore
   if (model && PRODUCT_PRICES.model[model] !== undefined) {
       // @ts-ignore
     let price = PRODUCT_PRICES.model[model]; // Start with the model price
-  if (finish === 'glossy') price += PRODUCT_PRICES.finish.glossy; // Add price for glossy finish (if any)
-  if (material === 'linen') price += PRODUCT_PRICES.material.linen; // Add price for linen (if any)
+  if (finish === 'glossy') price += PRODUCT_PRICES.finish.glossy; 
+  if (material === 'linen') price += PRODUCT_PRICES.material.linen; 
 
   let order: Order | undefined = undefined;
 
@@ -53,7 +53,7 @@ export const createCheckoutSession = async ({
   } else {
     order = await db.order.create({
       data: {
-        amount: price / 100, // Ensure to store the amount correctly
+        amount: price / 100, 
         userId: user.id,
         configurationId: configuration.id,
       },
@@ -65,7 +65,7 @@ export const createCheckoutSession = async ({
     images: [configuration.imageUrl], 
     default_price_data: {
       currency: 'USD',
-      unit_amount: price, // Use the correctly calculated price
+      unit_amount: price, 
     },
   });
 

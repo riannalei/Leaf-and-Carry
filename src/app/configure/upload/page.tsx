@@ -49,7 +49,7 @@ const Page = () => {
       className={cn(
         'relative h-full flex-1 my-16 w-full rounded-xl bg-[#F0F4F1] p-2 ring-1 ring-inset ring-[#E3E8E5] lg:rounded-2xl flex justify-center flex-col items-center',
         {
-          'ring-[#83A598]/25 bg-[#83A598]/10': isDragOver,  // Updated colors for drag over
+          'ring-[#83A598]/25 bg-[#83A598]/10': isDragOver,  
         }
       )}>
       <div className='relative flex flex-1 flex-col items-center justify-center w-full'>
